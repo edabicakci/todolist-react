@@ -1,10 +1,17 @@
 import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Button from '@mui/material/Button';
 
-function ToDoListItem() {
+import { service } from '../network/service';
+
+function ToDoListItem({todo}) {
+
+  const url = "https://63fpbddxa4.execute-api.eu-central-1.amazonaws.com/dev/todos";
+
+  const deleteTodo = async () =>{
+    service.delete(`/${todo.id}`)
+  }
   return (
 
     <>
@@ -14,9 +21,9 @@ function ToDoListItem() {
               <ListItemIcon>
             
               </ListItemIcon>
-              <ListItemText primary="Inbox" />
+              <ListItemText primary={todo.todo} />
            
-<Button variant="contained">Delete</Button>
+<Button variant="contained" onClick={deleteTodo}>Delete</Button>
           </ListItem>
 
     

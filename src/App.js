@@ -1,9 +1,21 @@
+import React, { useState, useEffect } from 'react';
+import { service } from './network/service';
+
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import ToDoListItem from './components/ToDoListItem';
+import ToDoList from './components/ToDoList';
 
 function App() {
+
+  const [todoText,setTodoText] = useState("");
+
+  const addTodo =  () => {
+    
+    service.post("", todoText);
+    
+  }
+
   return (
     <div className="App">
     <Box
@@ -14,12 +26,14 @@ function App() {
       noValidate
       autoComplete="off"
     >
-      <TextField id="outlined-basic" label="Add To Do" variant="outlined" />
-      <Button variant="contained">Add</Button>
+      <TextField id="outlined-basic" label="Add To Do" variant="outlined" onChange={(e) => {
+        setTodoText(e.target.value);
+      }}/>
+      <Button variant="contained" onClick= {addTodo}>Add</Button>
      
     </Box>
 
-    <ToDoListItem/>
+    <ToDoList/>
         
     </div>
   );
