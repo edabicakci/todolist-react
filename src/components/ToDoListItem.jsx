@@ -3,14 +3,16 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Button from '@mui/material/Button';
 
+import { useContext } from 'react';
 import { service } from '../network/service';
+import RefreshContext from "../contexts/RefreshContext";
 
 function ToDoListItem({todo}) {
 
-  const url = "https://63fpbddxa4.execute-api.eu-central-1.amazonaws.com/dev/todos";
-
+  const { refresh, setRefresh } = useContext(RefreshContext);
   const deleteTodo = async () =>{
-    service.delete(`/${todo.id}`)
+    await service.delete(`/${todo.id}`);
+    setRefresh(!refresh)
   }
   return (
 

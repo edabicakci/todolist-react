@@ -1,14 +1,14 @@
 const API_URL = "https://63fpbddxa4.execute-api.eu-central-1.amazonaws.com/dev/todos";
 
 export const service = {
-  get: async (url) => {
-    let result = [];
-    await fetch(API_URL + url)
+  get: async () => {
+    let result = {};
+    await fetch(API_URL)
       .then((res) => res.json())
       .then((data) => (result = data));
     return result;
   },
-  post: async (url, data) => {
+  post: async (data) => {
     let result = {};
     let requestOptions = {
       method: "POST",
@@ -17,7 +17,7 @@ export const service = {
       },
       body: JSON.stringify(data),
     };
-    await fetch(API_URL + url, requestOptions)
+    await fetch(API_URL, requestOptions)
       .then((res) => res.json())
       .then((data) => (result = data));
     return result;
@@ -25,13 +25,11 @@ export const service = {
   delete: async (url) => {
     let result = {};
     let requestOptions = {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      }
+      method: "DELETE"
     };
     await fetch(API_URL + url, requestOptions)
       .then((res) => res.json())
+      .then((data) => (result = data));
     return result;
   }
 };

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { service } from './network/service';
+import RefreshContext from "./contexts/RefreshContext";
 
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
@@ -9,10 +10,17 @@ import ToDoList from './components/ToDoList';
 function App() {
 
   const [todoText,setTodoText] = useState("");
+  const { refresh, setRefresh } = useContext(RefreshContext);
 
-  const addTodo =  () => {
-    
-    service.post("", todoText);
+  const addTodo =  async () => {
+
+    const newTodo = {
+      "todo": todoText
+    };
+   
+   await service.post( newTodo );
+   setRefresh(!refresh)
+  
     
   }
 
