@@ -1,47 +1,31 @@
-import React, { useState, useEffect , useContext } from 'react';
-import { service } from '../network/service';
+import React, { useState, useEffect, useContext } from "react";
+import { service } from "../network/service";
 
-import ToDoListItem from './ToDoListItem';
+import ToDoListItem from "./ToDoListItem";
 import RefreshContext from "../contexts/RefreshContext";
 
 function ToDoList() {
-  const [todos,setTodos] = useState([]);
+  const [todos, setTodos] = useState([]);
   const { refresh, setRefresh } = useContext(RefreshContext);
 
   const getData = async () => {
-
     let obj = await service.get();
     let list = obj.todos;
-    list.sort((a,b) => a.submittedAt - b.submittedAt); 
+    list.sort((a, b) => a.submittedAt - b.submittedAt);
     setTodos(list);
-    
-  }
+  };
 
-  useEffect(() => {
-    console.log("kk")
-    getData()
-  }, [refresh])
+  useEffect(
+    () => {
+      getData();
+    },
+    [refresh]
+  );
   return (
-
-    <>
-
-{
-
-todos?.map((todo,key) =>
-       
-       <ToDoListItem key = {key} todo = {todo}/> )}
-
-    
-    </>
-
-
-   
-
-
-    
-
-   
-    
+    <div>
+      {todos &&
+        todos.map((todo, key) => <ToDoListItem key={key} todo={todo} />)}
+    </div>
   );
 }
 
